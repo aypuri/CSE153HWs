@@ -82,8 +82,8 @@ def create_sawtooth_wave(frequency, duration, sample_rate=44100):
     #Q5: Your code goes here
     t = np.linspace(0, duration, int(sample_rate * duration))
     wave = np.zeros_like(t)
-    for k in range(1, 19, 1):
-        wave += (1 / k) * ((-1) ** k) * np.sin(2 * np.pi * k * frequency * t)
+    for k in range(1, 20):
+        wave += (1 / k) * ((-1) ** (k+1)) * np.sin(2 * np.pi * k * frequency * t)
     wave *= 2 / np.pi
     return wave
 
