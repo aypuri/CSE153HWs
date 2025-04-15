@@ -174,18 +174,26 @@ def featureQ9(file_path):
 def featureQ10(file_path):
     #Q10: Your code goes here
     mid = MidiFile(file_path)
-    pitches = []
-    note_count = 0
+    
+    # Initialize lists to gather information from all note_on events
+    note_values = []    # For storing note numbers
+    velocities = []     # For storing velocities
+    total_ticks = 0
+    
     for track in mid.tracks:
+        cumulative_ticks = 0  # adding ticks as we go
         for msg in track:
+            cumulative_ticks += msg.time
             if msg.type == 'note_on' and msg.velocity > 0:
-                pitches.append(msg.note)
-                note_count += 1
-    if pitches:
-        pitch_range = max(pitches) - min(pitches)
-        avg_pitch = np.average(pitches)
-    else:
-        pitch_range = 0
-        avg_pitch = 0
-
-    return [pitch_range, note_count, avg_pitch]
+                note_values.append(msg.note)
+                velocities.append(msg.velocity)
+        total_ticks = max(total_ticks, cumulative_ticks)
+    
+    # Feature 1: Number of tracks
+    num_tracks = len(mid.tracks)
+    
+    # Feature 2: Total number of active note events
+    note_count = len(note_values)
+    
+    # Feature 3: Note density (notes per tick)
+    note_density = note_count / total_ticks if total_ticks > 0 else 0
