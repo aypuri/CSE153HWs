@@ -55,16 +55,30 @@ def decrease_amplitude(audio):
 
 def add_delay_effects(audio):
     #Q3: Your code goes here
+    delay_seconds = 0.5
+    delay_samples = int(delay_seconds * SAMPLE_RATE)
+
+    # output length is longer to accommodate the delayed signal.
+    output_length = len(audio) + delay_samples
+    delayed_audio = np.zeros(output_length)
+    
+    # Add the original audio at 70% amplitude.
+    delayed_audio[:len(audio)] += 0.7 * audio
+    # Add the delayed audio at 30% amplitude.
+    delayed_audio[delay_samples:] += 0.3 * audio
 
     return delayed_audio
 
 def concatenate_audio(list_of_your_audio):
     #Q4: Your code goes here
-    pass
+    return np.concatenate(list_of_your_audio)
 
 def mix_audio(list_of_your_audio, amplitudes):
     #Q4: Your code goes here
-    pass
+    mixed = np.zeros_like(list_of_your_audio[0])
+    for audio, amp in zip(list_of_your_audio, amplitudes):
+        mixed += amp * audio
+    return mixed
 
 def create_sawtooth_wave(frequency, duration, sample_rate=44100):
     #Q5: Your code goes here
