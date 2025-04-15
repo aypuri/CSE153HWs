@@ -49,9 +49,7 @@ def note_name_to_frequency(note_name):
 def decrease_amplitude(audio):
     # Q2: Your code goes here
 
-    envelope = np.linspace(1, 0, len(audio))
-    
-    return audio * envelope
+    return audio * np.linspace(1, 0, len(audio))
 
 def add_delay_effects(audio):
     #Q3: Your code goes here
@@ -82,6 +80,11 @@ def mix_audio(list_of_your_audio, amplitudes):
 
 def create_sawtooth_wave(frequency, duration, sample_rate=44100):
     #Q5: Your code goes here
+    t = np.linspace(0, duration, int(sample_rate * duration))
+    wave = np.zeros_like(t)
+    for k in range(1, 19, 1):
+        wave += (1 / k) * ((-1) ** k) * np.sin(2 * np.pi * k * frequency * t)
+    wave *= 2 / np.pi
     return wave
 
 def get_file_lists():
