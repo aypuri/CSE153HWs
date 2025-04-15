@@ -198,4 +198,8 @@ def featureQ10(file_path):
     # Feature 3: Note density (notes per tick)
     note_density = note_count / total_ticks if total_ticks > 0 else 0
 
-    return [num_tracks, note_count, note_density]
+    return [num_tracks, note_count, note_density,
+            get_lowest_pitch(file_path),
+            get_highest_pitch(file_path),
+            get_unique_pitch_num(file_path),
+            get_average_pitch_value(file_path)]
