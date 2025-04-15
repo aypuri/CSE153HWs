@@ -80,61 +80,9 @@ def mix_audio(list_of_your_audio, amplitudes):
 
 def create_sawtooth_wave(frequency, duration, sample_rate=44100):
     #Q5: Your code goes here
-    t = np.linspace(0, duration, int(sample_rate * duration))
+    t = np.linspace(0, duration, int(duration * sample_rate), endpoint=False)
     wave = np.zeros_like(t)
     for k in range(1, 20):
         wave += ((-1)**(k+1) / k) * np.sin(2 * np.pi * k * frequency * t)
     wave *= (2 / np.pi)
     return wave
-
-def get_file_lists():
-    piano_files = sorted(glob.glob("./piano/*.mid"))
-    drum_files = sorted(glob.glob("./drums/*.mid"))
-    return piano_files, drum_files
-
-def get_num_beats(file_path):
-    # Q6: Your code goes here
-    mid = MidiFile(file_path)
-    # Might need: mid.tracks, msg.time, mid.ticks_per_beat
-    return nBeats
-
-def get_stats(piano_path_list, drum_path_list):
-    piano_beat_nums = []
-    drum_beat_nums = []
-    for file_path in piano_path_list:
-        piano_beat_nums.append(get_num_beats(file_path))
-        
-    for file_path in drum_path_list:
-        drum_beat_nums.append(get_num_beats(file_path))
-    
-    return {"piano_midi_num":len(piano_path_list),
-            "drum_midi_num":len(drum_path_list),
-            "average_piano_beat_num":np.average(piano_beat_nums),
-            "average_drum_beat_num":np.average(drum_beat_nums)}
-
-def get_lowest_pitch(file_path):
-    #Q7-1: Your code goes here
-    pass
-
-def get_highest_pitch(file_path):
-    #Q7-2: Your code goes here
-    pass
-
-def get_unique_pitch_num(file_path):
-    #Q7-3: Your code goes here
-    pass
-
-def get_average_pitch_value(file_path):
-    #Q8: Your code goes here
-    pass
-
-def featureQ9(file_path):
-    # Already implemented: this one is a freebie if you got everything above correct!
-    return [get_lowest_pitch(file_path),
-            get_highest_pitch(file_path),
-            get_unique_pitch_num(file_path),
-            get_average_pitch_value(file_path)]
-
-def featureQ10(file_path):
-    #Q10: Your code goes here
-    return []
