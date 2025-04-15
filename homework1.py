@@ -1,0 +1,123 @@
+import numpy as np
+from scipy.io import wavfile
+import glob
+# from mido import MidiFile
+# from sklearn.model_selection import train_test_split
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.metrics import classification_report
+# import math
+
+# from sklearn.model_selection import train_test_split
+# from sklearn.linear_model import LogisticRegression
+
+SAMPLE_RATE = 44100
+
+NOTE_FREQUENCIES = { #freqs in the 4th octave
+    'C': 261.63,
+    'C#': 277.18,
+    'D': 293.66,
+    'D#': 311.13,
+    'E': 329.63,
+    'F': 349.23,
+    'F#': 369.99,
+    'G': 392.00,
+    'G#': 415.30,
+    'A': 440.00,
+    'A#': 466.16,
+    'B': 493.88
+}
+
+def note_name_to_frequency(note_name):
+    # Q1: Your code goes here
+    note = note_name[:-1]
+    octave = int(note_name[-1])
+    frequency = 0.0
+
+    if octave == 4:
+        frequency = NOTE_FREQUENCIES[note]
+    elif octave > 4:
+        frequency = NOTE_FREQUENCIES[note] * (2 ** (octave - 4))
+    else:
+        frequency = NOTE_FREQUENCIES[note] / (2 ** (4 - octave))
+
+    return frequency
+
+# print(note_name_to_frequency('A4'),  # Example usage
+# note_name_to_frequency('C3'),
+# note_name_to_frequency('G5'))
+
+def decrease_amplitude(audio):
+    # Q2: Your code goes here
+
+    envelope = np.linspace(1, 0, len(audio))
+    
+    return audio * envelope
+
+def add_delay_effects(audio):
+    #Q3: Your code goes here
+
+    return delayed_audio
+
+def concatenate_audio(list_of_your_audio):
+    #Q4: Your code goes here
+    pass
+
+def mix_audio(list_of_your_audio, amplitudes):
+    #Q4: Your code goes here
+    pass
+
+def create_sawtooth_wave(frequency, duration, sample_rate=44100):
+    #Q5: Your code goes here
+    return wave
+
+def get_file_lists():
+    piano_files = sorted(glob.glob("./piano/*.mid"))
+    drum_files = sorted(glob.glob("./drums/*.mid"))
+    return piano_files, drum_files
+
+def get_num_beats(file_path):
+    # Q6: Your code goes here
+    mid = MidiFile(file_path)
+    # Might need: mid.tracks, msg.time, mid.ticks_per_beat
+    return nBeats
+
+def get_stats(piano_path_list, drum_path_list):
+    piano_beat_nums = []
+    drum_beat_nums = []
+    for file_path in piano_path_list:
+        piano_beat_nums.append(get_num_beats(file_path))
+        
+    for file_path in drum_path_list:
+        drum_beat_nums.append(get_num_beats(file_path))
+    
+    return {"piano_midi_num":len(piano_path_list),
+            "drum_midi_num":len(drum_path_list),
+            "average_piano_beat_num":np.average(piano_beat_nums),
+            "average_drum_beat_num":np.average(drum_beat_nums)}
+
+def get_lowest_pitch(file_path):
+    #Q7-1: Your code goes here
+    pass
+
+def get_highest_pitch(file_path):
+    #Q7-2: Your code goes here
+    pass
+
+def get_unique_pitch_num(file_path):
+    #Q7-3: Your code goes here
+    pass
+
+def get_average_pitch_value(file_path):
+    #Q8: Your code goes here
+    pass
+
+def featureQ9(file_path):
+    # Already implemented: this one is a freebie if you got everything above correct!
+    return [get_lowest_pitch(file_path),
+            get_highest_pitch(file_path),
+            get_unique_pitch_num(file_path),
+            get_average_pitch_value(file_path)]
+
+def featureQ10(file_path):
+    #Q10: Your code goes here
+    return []
