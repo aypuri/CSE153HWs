@@ -125,6 +125,7 @@ def get_stats(piano_path_list, drum_path_list):
             "average_drum_beat_num":np.average(drum_beat_nums)}
 
 def get_lowest_pitch(file_path):
+    #Q7-1: Your code goes here
     mid = MidiFile(file_path)
     pitches = []
     for track in mid.tracks:
@@ -134,6 +135,7 @@ def get_lowest_pitch(file_path):
     return min(pitches) if pitches else None
 
 def get_highest_pitch(file_path):
+    #Q7-2: Your code goes here
     mid = MidiFile(file_path)
     pitches = []
     for track in mid.tracks:
@@ -143,6 +145,7 @@ def get_highest_pitch(file_path):
     return max(pitches) if pitches else None
 
 def get_unique_pitch_num(file_path):
+    #Q7-3: Your code goes here
     mid = MidiFile(file_path)
     unique_pitches = set()
     for track in mid.tracks:
@@ -152,6 +155,7 @@ def get_unique_pitch_num(file_path):
     return len(unique_pitches)
 
 def get_average_pitch_value(file_path):
+    #Q8: Your code goes here
     mid = MidiFile(file_path)
     pitches = []
     for track in mid.tracks:
@@ -166,3 +170,22 @@ def featureQ9(file_path):
             get_highest_pitch(file_path),
             get_unique_pitch_num(file_path),
             get_average_pitch_value(file_path)]
+
+def featureQ10(file_path):
+    #Q10: Your code goes here
+    mid = MidiFile(file_path)
+    pitches = []
+    note_count = 0
+    for track in mid.tracks:
+        for msg in track:
+            if msg.type == 'note_on' and msg.velocity > 0:
+                pitches.append(msg.note)
+                note_count += 1
+    if pitches:
+        pitch_range = max(pitches) - min(pitches)
+        avg_pitch = np.average(pitches)
+    else:
+        pitch_range = 0
+        avg_pitch = 0
+
+    return [pitch_range, note_count, avg_pitch]
