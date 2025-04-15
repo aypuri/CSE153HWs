@@ -104,7 +104,7 @@ def get_num_beats(file_path):
             total_ticks = track_ticks
     # Number of beats (ensure ticks_per_beat is non-zero)
     nBeats = 0
-    
+
     if mid.ticks_per_beat:
         nBeats = total_ticks / mid.ticks_per_beat
 
@@ -123,3 +123,46 @@ def get_stats(piano_path_list, drum_path_list):
             "drum_midi_num":len(drum_path_list),
             "average_piano_beat_num":np.average(piano_beat_nums),
             "average_drum_beat_num":np.average(drum_beat_nums)}
+
+def get_lowest_pitch(file_path):
+    mid = MidiFile(file_path)
+    pitches = []
+    for track in mid.tracks:
+        for msg in track:
+            if msg.type == 'note_on' and msg.velocity > 0:
+                pitches.append(msg.note)
+    return min(pitches) if pitches else None
+
+def get_highest_pitch(file_path):
+    mid = MidiFile(file_path)
+    pitches = []
+    for track in mid.tracks:
+        for msg in track:
+            if msg.type == 'note_on' and msg.velocity > 0:
+                pitches.append(msg.note)
+    return max(pitches) if pitches else None
+
+def get_unique_pitch_num(file_path):
+    mid = MidiFile(file_path)
+    unique_pitches = set()
+    for track in mid.tracks:
+        for msg in track:
+            if msg.type == 'note_on' and msg.velocity > 0:
+                unique_pitches.add(msg.note)
+    return len(unique_pitches)
+
+def get_average_pitch_value(file_path):
+    mid = MidiFile(file_path)
+    pitches = []
+    for track in mid.tracks:
+        for msg in track:
+            if msg.type == 'note_on' and msg.velocity > 0:
+                pitches.append(msg.note)
+    return np.average(pitches) if pitches else 0
+
+def featureQ9(file_path):
+    # Already implemented: this one is a freebie if you got everything above correct!
+    return [get_lowest_pitch(file_path),
+            get_highest_pitch(file_path),
+            get_unique_pitch_num(file_path),
+            get_average_pitch_value(file_path)]
